@@ -11,9 +11,12 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="./style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -25,28 +28,25 @@
   <body>
     <section>
       <div class="container">
-        <button
-          class="btn btn-success my-3"
-          id="addTaskButton"
-          data-bs-toggle="modal"
-          data-bs-target="#taskModal"
-        >
+        <!-- data-bs-toggle="modal"
+        data-bs-target="#taskModal" -->
+        <button class="btn btn-success my-3" id="addTaskButton">
           Add task
         </button>
         <div class="board">
           <div class="column" id="todo">
             <h6>
-              <i class="fa-solid fa-circle fa-xs" style="color: #b6bbc3"></i> To
-              do
+              <i class="fa-solid fa-circle fa-xs" style="color: #b6bbc3"></i>
+              Todo
             </h6>
-            <div class="task">
+            <div class="task" id="taskTodoList">
+              <i
+                onclick="myFunction(this)"
+                class="fa-regular fa-circle fa-sm"
+              ></i>
               <p>[loan-management] - Add card component</p>
-              <div>
-                <i class="fa-solid fa-pencil fa-sm"></i>
-              </div>
-              <div>
-                <i class="fa-solid fa-trash"></i>
-              </div>
+              <i class="fa-solid fa-pencil fa-sm"></i>
+              <i class="fa-regular fa-trash-can"></i>
             </div>
           </div>
           <div class="column" id="in-progress">
@@ -54,50 +54,44 @@
               <i class="fa-solid fa-circle fa-xs" style="color: #f3fb7e"></i> In
               progress
             </h6>
-            <div class="task">
-              <p>[loan-management] - Add card component</p>
-              <div>
-                <i class="fa-solid fa-pencil fa-sm"></i>
-              </div>
-              <div>
-                <i class="fa-regular fa-trash-can"></i>
-              </div>
+            <div class="task" id="taskProgressList">
+              <i
+                onclick="myFunction(this)"
+                class="fa-regular fa-circle fa-sm"
+              ></i>
+              <p class="checked">[loan-management] - Add card component</p>
+              <i class="fa-solid fa-pencil fa-sm"></i>
+              <i class="fa-regular fa-trash-can"></i>
             </div>
           </div>
           <div class="column" id="done">
             <h6>
-              <i class="fa-solid fa-circle fa-xs" style="color: #75ff42"></i>
-              Done
+              <i class="fa-solid fa-circle fa-xs" style="color: #75ff42"></i
+              >Done
             </h6>
-            <div class="task">
-              <div>
-                <i
-                  class="fa-regular fa-circle-check fa-sm"
-                  style="color: #ffffff"
-                ></i>
-              </div>
-              <p>[loan-management] - Add card component</p>
-              <div>
-                <i class="fa-solid fa-pencil fa-sm"></i>
-              </div>
-              <div>
-                <i class="fa-regular fa-trash-can"></i>
-              </div>
+            <div class="task" id="taskDoneList">
+              <i
+                onclick="myFunction(this)"
+                class="fa-regular fa-circle fa-sm"
+              ></i>
+              <p>[ Loan-management ] - Add card component</p>
+              <i class="fa-solid fa-pencil fa-sm"></i>
+              <i class="fa-regular fa-trash-can"></i>
             </div>
           </div>
           <div class="column" id="blocked">
             <h6>
-              <i class="fa-solid fa-circle fa-xs" style="color: #ff4242"></i>
-              Blocked
-            </h5>
-            <div class="task">
+              <i class="fa-solid fa-circle fa-xs" style="color: #ff4242"></i
+              >Blocked
+            </h6>
+            <div class="task" id="taskBlockedList">
+              <i
+                onclick="myFunction(this)"
+                class="fa-regular fa-circle fa-sm"
+              ></i>
               <p>[loan-management] - Add card component</p>
-              <div>
-                <i class="fa-solid fa-pencil fa-sm"></i>
-              </div>
-              <div>
-                <i class="fa-regular fa-trash-can"></i>
-              </div>
+              <i class="fa-solid fa-pencil fa-sm"></i>
+              <i class="fa-regular fa-trash-can"></i>
             </div>
           </div>
         </div>
@@ -144,7 +138,9 @@
                   <option value="blocked">Blocked</option>
                 </select>
               </div>
-              <button type="submit" class="btn btn-submit">Submit</button>
+              <button type="submit" class="btn btn-submit" id="save-Btn">
+                Submit
+              </button>
             </form>
           </div>
         </div>
