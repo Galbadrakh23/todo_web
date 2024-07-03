@@ -1,50 +1,21 @@
 console.log("Working");
 
-// const addTaskButton = document.getElementById("addTaskButton");
-// const taskModalElement = document.getElementById("taskModal");
-// const taskForm = document.querySelector("#taskModal form");
-// const taskNameInput = document.getElementById("taskName");
-// const taskStatusSelect = document.getElementById("taskStatus");
-
 function myFunction(x) {
   x.classList.toggle("fa-solid");
 }
 
-// <!-- <div class="task" id="taskTodoList">
-//   <i
-//     onclick="myFunction(this)"
-//     class="fa-regular fa-circle fa-sm"
-//   ></i>
-//   <p>[loan-management] - Add card component</p>
-//   <i class="fa-solid fa-pencil fa-sm"></i>
-//   <i class="fa-regular fa-trash-can"></i>
-// </div> -->
-
+// DOM ELEMEMTS
 const taskTodoList = document.getElementById("taskTodoList");
 const taskProgressList = document.getElementById("taskProgressList");
 const taskDoneList = document.getElementById("taskDoneList");
 const taskBlockedList = document.getElementById("taskBlockedList");
-const addTaskBtn = document.getElementById("addTaskButton");
-const saveBtn = document.getElementById("save-Btn");
+const addTaskBtn = document.getElementById("addTaskBtn");
+const saveBtn = document.getElementById("save-btn");
+const taskInput = document.getElementById("task-input");
+const taskStatus = document.getElementById("status");
 
-// const newTaskCard = `<div class="task" id="taskTodoList">
-//   <i
-//     onclick="myFunction(this)"
-//     class="fa-regular fa-circle fa-sm"
-//   ></i>
-//   <p>[loan-management] - Add card component</p>
-//   <i class="fa-solid fa-pencil fa-sm"></i>
-//   <i class="fa-regular fa-trash-can"></i>
-// </div>
-// `;
-
-// taskTodoList.innerHTML = newTaskCard;
-
+// VARIABLES FOR TASK
 const tasks = [
-  {
-    name: "Task One",
-    status: "TODO",
-  },
   {
     name: "Task Two",
     status: "INPROGRESS",
@@ -54,6 +25,7 @@ const tasks = [
     status: "BLOCKED",
   },
 ];
+
 function draw() {
   taskTodoList.innerHTML = "";
   taskProgressList.innerHTML = "";
@@ -63,12 +35,19 @@ function draw() {
   for (let i = 0; i < tasks.length; i++) {
     console.log("TASKS", tasks);
     const newTaskCard = `
-  <div class="task" id="taskTodoList">
-   <i onclick="myFunction(this)" class="fa-regular fa-circle fa-sm"></i>
-   <p>${tasks[i].name}</p>
-   <i class="fa-solid fa-pencil fa-sm"></i>
-   <i class="fa-regular fa-trash-can"></i>
-  </div>`;
+
+    <div class="d-flex justify-content-between align-items-center border border-1 rounded p-2 gap-2">
+    <span>${tasks[i].name}</span>
+    <div class="d-flex justify-content-end">
+        <button class="btn">
+        <i class="bi bi-pencil ms-auto"></i>
+        </button>
+        <button class="btn">
+        <i class="bi bi-trash3 ms-auto"></i>
+        </button>
+    </div>
+    </div>
+    `;
     switch (tasks[i].status) {
       case "TODO": {
         taskTodoList.innerHTML += newTaskCard;
@@ -92,10 +71,38 @@ function draw() {
     }
   }
 }
-addTaskBtn.addEventListener("click", function () {
-  tasks[1].status = "DONE";
+
+saveBtn.addEventListener("click", function () {
+  const newTask = {
+    name: taskInput.value,
+    status: taskStatus.value,
+  };
+  tasks.push(newTask);
   draw();
   console.log("TASKS", tasks);
 });
 
 draw();
+function changeBorderColor(status) {
+  switch (status) {
+    case "TODO": {
+      return "grey";
+    }
+    case "INPROGRESS": {
+      return "yellow";
+    }
+    case "DONE": {
+      return "green";
+    }
+    case "BLOCKED": {
+      return "red";
+    }
+    default: {
+      return "grey";
+    }
+  }
+}
+
+function updateBorderColor(element, status) {
+  element.style.borderColor = changeBorderColor(status);
+}
