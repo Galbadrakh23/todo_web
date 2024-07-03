@@ -1,10 +1,10 @@
 console.log("Working");
 
-function myFunction(x) {
-  x.classList.toggle("fa-solid");
+function circleMoveFunction(x) {
+  x.classList.toggle("bi-circle-fill");
 }
 
-// DOM ELEMEMTS
+// Dom
 const taskTodoList = document.getElementById("taskTodoList");
 const taskProgressList = document.getElementById("taskProgressList");
 const taskDoneList = document.getElementById("taskDoneList");
@@ -14,11 +14,23 @@ const saveBtn = document.getElementById("save-btn");
 const taskInput = document.getElementById("task-input");
 const taskStatus = document.getElementById("status");
 
-// VARIABLES FOR TASK
+// Variables for
+
+let isEdited = false;
+let editedIndex = -1;
+
 const tasks = [
+  {
+    name: "Task One",
+    status: "TODO",
+  },
   {
     name: "Task Two",
     status: "INPROGRESS",
+  },
+  {
+    name: "Task Two",
+    status: "DONE",
   },
   {
     name: "Task Three",
@@ -35,15 +47,15 @@ function draw() {
   for (let i = 0; i < tasks.length; i++) {
     console.log("TASKS", tasks);
     const newTaskCard = `
-
-    <div class="d-flex justify-content-between align-items-center border border-1 rounded p-2 gap-2">
-    <span>${tasks[i].name}</span>
+    <div class="d-flex justify-content-between align-items-center border border-1 border-success rounded p-2 gap-2">
+    <button class="btn" onmousemove="circleMoveFunction(this)"> <i class="bi bi-circle"></i></button>
+    <span>${tasks[i].name}  - (indexCounter-${i})</span>
     <div class="d-flex justify-content-end">
-        <button class="btn">
-        <i class="bi bi-pencil ms-auto"></i>
+        <button class="btn" data-bs-toggle="modal" data-bs-target="#taskModal" onclick="taskEdit(${i})">
+        <i class="bi bi-pencil"></i>
         </button>
-        <button class="btn">
-        <i class="bi bi-trash3 ms-auto"></i>
+        <button class="btn"> 
+        <i class="bi bi-trash3" onclick="deleteTask(${i})"></i>
         </button>
     </div>
     </div>
@@ -71,38 +83,35 @@ function draw() {
     }
   }
 }
+draw();
 
 saveBtn.addEventListener("click", function () {
-  const newTask = {
-    name: taskInput.value,
-    status: taskStatus.value,
-  };
-  tasks.push(newTask);
+  if (isEdited) {
+    tasks[editedIndex].name = taskInput.value;
+    tasks[editedIndex].status = taskInput.value;
+    isEdited = false;
+  } else {
+    const newTask = {
+      name: taskInput.value,
+      status: taskStatus.value,
+    };
+    tasks.push(newTask);
+  }
+  taskInput.value = "";
+  taskStatus.value = "TODO";
   draw();
-  console.log("TASKS", tasks);
 });
 
-draw();
-function changeBorderColor(status) {
-  switch (status) {
-    case "TODO": {
-      return "grey";
-    }
-    case "INPROGRESS": {
-      return "yellow";
-    }
-    case "DONE": {
-      return "green";
-    }
-    case "BLOCKED": {
-      return "red";
-    }
-    default: {
-      return "grey";
-    }
-  }
-}
+const deleteTask = (taskIndex) => {
+  tasks.splice(taskIndex, 1);
+  draw();
+};
 
-function updateBorderColor(element, status) {
-  element.style.borderColor = changeBorderColor(status);
-}
+const taskEdit = (taskIndex) => {
+  console.log(taskIndex);
+  taskInput.value = tasks[taskIndex].name;
+  taskStatus.value = tasks[taskIndex].status;
+
+  isEdited = true;
+  editedIndex = taskIndex;
+};
