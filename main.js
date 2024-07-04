@@ -1,8 +1,8 @@
 console.log("Working");
 
-function circleMoveFunction(x) {
-  x.classList.toggle("bi-circle-fill");
-}
+// function circleMoveFunction(x) {
+//   x.classList.toggle("bi-circle-fill");
+// }
 
 // Dom
 const taskTodoList = document.getElementById("taskTodoList");
@@ -13,7 +13,10 @@ const addTaskBtn = document.getElementById("addTaskBtn");
 const saveBtn = document.getElementById("save-btn");
 const taskInput = document.getElementById("task-input");
 const taskStatus = document.getElementById("status");
-const cardTodo = document.querySelector(".card-todo");
+const counterTodo = document.querySelector(".counterTodo");
+const counterDone = document.querySelector(".counterDone");
+const counterInprogress = document.querySelector(".counterInprogress");
+const counterBlocked = document.querySelector(".counterBlocked");
 
 // Variables for
 
@@ -45,12 +48,16 @@ function draw() {
   taskDoneList.innerHTML = "";
   taskBlockedList.innerHTML = "";
 
+  let countVal = 0;
+  let countVbl = 0;
+  let countVcl = 0;
+  let countVdl = 0;
   for (let i = 0; i < tasks.length; i++) {
     console.log("TASKS", tasks);
     const newTaskCard = `
     <div class="d-flex justify-content-between align-items-center border border-1 border-success rounded p-2 gap-2">
     <button class="btn" onmousemove="circleMoveFunction(this)"> <i class="bi bi-circle"></i></button>
-    <span>${tasks[i].name}  - (indexCounter-${i})</span>
+    <span>${tasks[i].name}</span>
     <div class="d-flex justify-content-end">
         <button class="btn" data-bs-toggle="modal" data-bs-target="#taskModal" onclick="taskEdit(${i})">
         <i class="bi bi-pencil"></i>
@@ -64,18 +71,22 @@ function draw() {
     switch (tasks[i].status) {
       case "TODO": {
         taskTodoList.innerHTML += newTaskCard;
+        countVal++;
         break;
       }
       case "INPROGRESS": {
         taskProgressList.innerHTML += newTaskCard;
+        countVbl++;
         break;
       }
       case "DONE": {
         taskDoneList.innerHTML += newTaskCard;
+        countVcl++;
         break;
       }
       case "BLOCKED": {
         taskBlockedList.innerHTML += newTaskCard;
+        countVdl++;
         break;
       }
       default: {
@@ -83,13 +94,17 @@ function draw() {
       }
     }
   }
+  counterTodo.textContent = countVal;
+  counterDone.textContent = countVbl;
+  counterInprogress.textContent = countVcl;
+  counterBlocked.textContent = countVdl;
 }
 draw();
 
 saveBtn.addEventListener("click", function () {
   if (isEdited) {
     tasks[editedIndex].name = taskInput.value;
-    tasks[editedIndex].status = taskInput.value;
+    tasks[editedIndex].status = taskStatus.value;
     isEdited = false;
   } else {
     const newTask = {
@@ -98,9 +113,9 @@ saveBtn.addEventListener("click", function () {
     };
     tasks.push(newTask);
   }
+  draw();
   taskInput.value = "";
   taskStatus.value = "TODO";
-  draw();
 });
 
 const deleteTask = (taskIndex) => {
@@ -116,32 +131,3 @@ const taskEdit = (taskIndex) => {
   isEdited = true;
   editedIndex = taskIndex;
 };
-
-function countTasks() {
-  console.log("Counting tasks");
-  const todoCount = document.querySelector(".counterTodo");
-  const inProgressCount = document.querySelector(".counterInprogress");
-  const doneCount = document.querySelector(".counterDone");
-  const blockedCount = document.querySelector(".counterBlocked");
-
-  const todoCountValue = tasks.filter((task) => task.status === "TODO").length;
-  const inProgressCountValue = tasks.filter(
-    (task) => task.status === "INPROGRESS"
-  ).length;
-  const doneCountValue = tasks.filter((task) => task.status === "DONE").length;
-  const blockedCountValue = tasks.filter(
-    (task) => task.status === "BLOCKED"
-  ).length;
-
-  console.log("TODO count:", todoCountValue);
-  console.log("INPROGRESS count:", inProgressCountValue);
-  console.log("DONE count:", doneCountValue);
-  console.log("BLOCKED count:", blockedCountValue);
-
-  todoCount.textContent = todoCountValue;
-  inProgressCount.textContent = inProgressCountValue;
-  doneCount.textContent = doneCountValue;
-  blockedCount.textContent = blockedCountValue;
-  draw();
-}
-countTasks();
