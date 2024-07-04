@@ -1,9 +1,5 @@
 console.log("Working");
 
-// function circleMoveFunction(x) {
-//   x.classList.toggle("bi-circle-fill");
-// }
-
 // Dom
 const taskTodoList = document.getElementById("taskTodoList");
 const taskProgressList = document.getElementById("taskProgressList");
@@ -56,7 +52,7 @@ function draw() {
     console.log("TASKS", tasks);
     const newTaskCard = `
     <div class="d-flex justify-content-between align-items-center border border-1 border-success rounded p-2 gap-2">
-    <button class="btn" onmousemove="circleMoveFunction(this)"> <i class="bi bi-circle"></i></button>
+    <button class="btn"> <i class="bi bi-circle"></i></button>
     <span>${tasks[i].name}</span>
     <div class="d-flex justify-content-end">
         <button class="btn" data-bs-toggle="modal" data-bs-target="#taskModal" onclick="taskEdit(${i})">
