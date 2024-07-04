@@ -13,6 +13,7 @@ const addTaskBtn = document.getElementById("addTaskBtn");
 const saveBtn = document.getElementById("save-btn");
 const taskInput = document.getElementById("task-input");
 const taskStatus = document.getElementById("status");
+const cardTodo = document.querySelector(".card-todo");
 
 // Variables for
 
@@ -115,3 +116,32 @@ const taskEdit = (taskIndex) => {
   isEdited = true;
   editedIndex = taskIndex;
 };
+
+function countTasks() {
+  console.log("Counting tasks");
+  const todoCount = document.querySelector(".counterTodo");
+  const inProgressCount = document.querySelector(".counterInprogress");
+  const doneCount = document.querySelector(".counterDone");
+  const blockedCount = document.querySelector(".counterBlocked");
+
+  const todoCountValue = tasks.filter((task) => task.status === "TODO").length;
+  const inProgressCountValue = tasks.filter(
+    (task) => task.status === "INPROGRESS"
+  ).length;
+  const doneCountValue = tasks.filter((task) => task.status === "DONE").length;
+  const blockedCountValue = tasks.filter(
+    (task) => task.status === "BLOCKED"
+  ).length;
+
+  console.log("TODO count:", todoCountValue);
+  console.log("INPROGRESS count:", inProgressCountValue);
+  console.log("DONE count:", doneCountValue);
+  console.log("BLOCKED count:", blockedCountValue);
+
+  todoCount.textContent = todoCountValue;
+  inProgressCount.textContent = inProgressCountValue;
+  doneCount.textContent = doneCountValue;
+  blockedCount.textContent = blockedCountValue;
+  draw();
+}
+countTasks();
